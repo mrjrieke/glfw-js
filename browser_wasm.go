@@ -139,14 +139,12 @@ func CreateWindow(_, _ int, title string, monitor *Monitor, share *Window) (*Win
 			w.keys = append(w.keys, make([]Action, neededSize-len(w.keys))...)
 		}
 		w.keys[key] = action
-
+		mods := toModifierKey(ke)
 		if w.keyCallback != nil {
-			mods := toModifierKey(ke)
-
 			go w.keyCallback(w, key, -1, action, mods)
 		}
 
-		if w.charCallback != nil {
+		if w.charCallback != nil && mods <= 2 {
 			keyStr := ke.Get("key").String()
 			if len(keyStr) == 1 {
 				keyRune := []rune(keyStr)
