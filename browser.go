@@ -923,13 +923,7 @@ func DefaultWindowHints() {
 
 func (w *Window) SetClipboardString(str string) {
 	// Set the clipboard content from the input str
-	js.Global.Get("navigator").Get("clipboard").Call("writeText", str).Call("then", js.MakeFunc(func(this *js.Object, p []*js.Object) interface{} {
-		return nil
-	})).Call("catch", js.MakeFunc(func(this *js.Object, p []*js.Object) interface{} {
-		return nil
-	}))
-
-	return
+	js.Global.Get("navigator").Get("clipboard").Call("writeText", str)
 }
 func (w *Window) GetClipboardString() (string, error) {
 	clipboardChan := make(chan *js.Object)
